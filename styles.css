@@ -103,8 +103,9 @@ h1, h2 {
 }
 
 .about-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 2rem;
     max-width: 1200px;
     margin: 0 auto;
@@ -113,11 +114,13 @@ h1, h2 {
 }
 
 .about-item {
+    flex: 1;
+    min-width: 250px;
+    max-width: 350px;
     padding: 2rem;
     background: white;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -316,16 +319,14 @@ footer {
         padding: 4rem 1rem;
     }
 
-    .about-content,
-    .contact-container {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
+    .about-content {
+        flex-direction: column;
+        align-items: center;
     }
 
-    .about-item,
-    .contact-info,
-    .contact-form {
-        padding: 1.5rem;
+    .about-item {
+        width: 100%;
+        max-width: none;
     }
 
     .about-item h3,
@@ -340,8 +341,8 @@ footer {
 
 /* 添加平板电脑尺寸的响应式样式 */
 @media (min-width: 769px) and (max-width: 1024px) {
-    .about-content {
-        grid-template-columns: repeat(2, 1fr);
+    .about-item {
+        min-width: 200px;
     }
 
     .contact-container {
