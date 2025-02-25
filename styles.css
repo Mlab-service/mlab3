@@ -66,6 +66,9 @@ nav {
     justify-content: center;
     background: rgba(255, 255, 255, 0.9);
     margin: 2rem 0;
+    max-width: 1400px;
+    margin: 0 auto;
+    overflow: hidden;
 }
 
 h1, h2 {
@@ -101,9 +104,11 @@ h1, h2 {
 
 .about-content {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2rem;
     max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
     width: 100%;
 }
 
@@ -113,16 +118,21 @@ h1, h2 {
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
 .about-item h3 {
     color: var(--primary-color);
     margin-bottom: 1rem;
+    font-size: 1.4rem;
 }
 
 .about-item p {
     line-height: 1.8;
     color: var(--text-color);
+    flex-grow: 1;
 }
 
 .products-grid {
@@ -202,6 +212,8 @@ h1, h2 {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
     max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
     width: 100%;
 }
 
@@ -210,6 +222,20 @@ h1, h2 {
     background: white;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    height: 100%;
+}
+
+.contact-info h3 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    font-size: 1.4rem;
+}
+
+.contact-info p {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
 .contact-info i {
@@ -222,28 +248,40 @@ h1, h2 {
     background: white;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    height: 100%;
 }
 
 .form-group {
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .form-group label {
     display: block;
     margin-bottom: 0.5rem;
+    color: var(--primary-color);
+    font-weight: 500;
 }
 
 .form-group input,
 .form-group textarea {
     width: 100%;
-    padding: 0.5rem;
+    padding: 0.8rem;
     border: 1px solid #ddd;
     border-radius: 5px;
+    font-family: inherit;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
 }
 
 .form-group textarea {
     height: 150px;
     resize: vertical;
+    min-height: 100px;
 }
 
 footer {
@@ -272,6 +310,42 @@ footer {
     
     .products-grid {
         grid-template-columns: 1fr;
+    }
+
+    .section {
+        padding: 4rem 1rem;
+    }
+
+    .about-content,
+    .contact-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .about-item,
+    .contact-info,
+    .contact-form {
+        padding: 1.5rem;
+    }
+
+    .about-item h3,
+    .contact-info h3 {
+        font-size: 1.2rem;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+}
+
+/* 添加平板电脑尺寸的响应式样式 */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .about-content {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .contact-container {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
