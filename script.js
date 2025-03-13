@@ -3,39 +3,31 @@ document.getElementById('contact-form').addEventListener('submit', function(even
     
     // Show loading state
     const submitButton = this.querySelector('button[type="submit"]');
-    const originalButtonText = submitButton.textContent;
-    submitButton.textContent = 'Sending...';
+    const originalText = submitButton.textContent;
+    submitButton.textContent = '发送中...';
     submitButton.disabled = true;
     
-    // Get form data
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const message = document.getElementById('message').value;
-    
-    // Send email using EmailJS
-    emailjs.send("service_6ykklxa", "template_dce6ut4", {
-        from_name: name,
-        from_email: email,
-        message: message,
-        to_name: "MLab Technical Service",
-        reply_to: email,
-    })
-    .then(
-        function(response) {
-            console.log("SUCCESS", response);
-            alert("Thank you for your message! We will get back to you soon.");
+    // 准备发送的参数
+    const templateParams = {
+        from_name: document.getElementById('name').value,
+        from_email: document.getElementById('email').value,
+        message: document.getElementById('message').value,
+        to_email: 'sales@mlab-technical.com.au'  // 接收邮件的地址
+    };
+
+    // 发送邮件
+    emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+        .then(function(response) {
+            alert('消息发送成功！');
             document.getElementById('contact-form').reset();
-        },
-        function(error) {
-            console.log("FAILED", error);
-            alert("Sorry, there was an error sending your message. Please try again later or contact us directly via email.");
-        }
-    )
-    .finally(function() {
-        // Reset button state
-        submitButton.textContent = originalButtonText;
-        submitButton.disabled = false;
-    });
+        }, function(error) {
+            console.error('发送失败:', error);
+            alert('发送失败，请稍后重试');
+        })
+        .finally(function() {
+            submitButton.textContent = originalText;
+            submitButton.disabled = false;
+        });
 });
 
 // Add smooth scrolling for navigation links

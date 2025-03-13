@@ -142,14 +142,14 @@
         <p>&copy; 2024 Mlab Technical Service. All rights reserved.</p>
     </footer>
 
-    <!-- 添加 EmailJS SDK -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <script type="text/javascript">
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>
         (function() {
-            emailjs.init("mdrYmxzp9-TvQ5IbH");
+            // 请将 YOUR_PUBLIC_KEY 替换为你在 EmailJS 获取的实际公钥
+            emailjs.init("YOUR_PUBLIC_KEY");
         })();
     </script>
-    
     <script src="script.js"></script>
 </body>
 </html> 
