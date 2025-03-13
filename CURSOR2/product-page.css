@@ -1,0 +1,540 @@
+.product-category-page {
+    padding: 6rem 2rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.category-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    padding: 2rem;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.category-header h1 {
+    color: var(--primary-color);
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.category-description {
+    font-size: 1.2rem;
+    color: #666;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.product-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}
+
+.product-item {
+    background: white;
+    border-radius: 10px;
+    padding: 3rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+.product-content {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 3rem;
+    align-items: start;
+}
+
+.product-content.reverse {
+    grid-template-columns: 1fr 1.2fr;
+    direction: rtl;
+}
+
+.product-content.reverse .product-text {
+    direction: ltr;
+}
+
+.product-text {
+    padding-right: 2rem;
+}
+
+.product-text h2 {
+    color: var(--primary-color);
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+}
+
+.product-specs, .product-description {
+    margin-bottom: 1.5rem;
+}
+
+.product-specs h3, .product-description h3 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+}
+
+.product-specs p, .product-description p {
+    color: #666;
+    line-height: 1.6;
+}
+
+.product-features, .product-applications {
+    margin-bottom: 2rem;
+}
+
+.product-features h3, .product-applications h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.product-features ul, .product-applications ul {
+    list-style: none;
+    padding-left: 1.5rem;
+}
+
+.product-features li, .product-applications li {
+    position: relative;
+    padding: 0.5rem 0;
+}
+
+.product-features li:before, .product-applications li:before {
+    content: "•";
+    color: var(--primary-color);
+    position: absolute;
+    left: -1.5rem;
+}
+
+.product-images {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: 1fr;
+    order: -1;
+    max-width: 500px;
+}
+
+.product-images img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    object-fit: contain;
+    background: #f8f8f8;
+    padding: 10px;
+}
+
+.inquiry-section {
+    text-align: center;
+    margin-top: 4rem;
+    padding: 3rem;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.inquiry-section h2 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.inquiry-section p {
+    color: #666;
+    margin-bottom: 2rem;
+}
+
+.inquiry-btn {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background: var(--primary-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+.inquiry-btn:hover {
+    background: var(--secondary-color);
+}
+
+@media (max-width: 1024px) {
+    .product-content {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .product-item {
+        padding: 2rem;
+    }
+
+    .product-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .product-images {
+        margin: 0 auto;
+        max-width: 400px;
+    }
+
+    .product-text {
+        padding-right: 0;
+    }
+
+    .category-header {
+        padding: 1.5rem;
+    }
+
+    .category-header h1 {
+        font-size: 2rem;
+    }
+}
+
+/* 管理员控制按钮 */
+.admin-controls {
+    margin-bottom: 2rem;
+    text-align: right;
+}
+
+.admin-btn {
+    padding: 0.8rem 1.5rem;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background 0.3s ease;
+}
+
+.admin-btn:hover {
+    background: var(--secondary-color);
+}
+
+/* 修改模态框样式 */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    overflow-y: auto;
+    padding: 40px 0;
+    box-sizing: border-box;
+}
+
+.modal-content {
+    position: relative;
+    background: white;
+    margin: 0 auto;
+    padding: 30px;
+    width: 90%;
+    max-width: 800px;
+    border-radius: 8px;
+    z-index: 10000;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.2);
+}
+
+.close-modal {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* 调整表单布局 */
+.product-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    font-weight: 500;
+    color: var(--primary-color);
+}
+
+.form-group input[type="text"],
+.form-group textarea {
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-family: inherit;
+}
+
+.form-group textarea {
+    min-height: 100px;
+    max-height: 300px;
+    resize: vertical;
+}
+
+/* 动态列表样式 */
+.dynamic-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.list-item {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.add-item-btn {
+    padding: 0.5rem;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+}
+
+/* 图片上传样式 */
+.image-upload {
+    margin-bottom: 1rem;
+}
+
+.image-upload input[type="file"] {
+    display: none;
+}
+
+.upload-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem;
+    border: 2px dashed #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+.upload-label:hover {
+    border-color: var(--primary-color);
+}
+
+.upload-label i {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+/* 调整图片预览区域 */
+.image-preview {
+    margin: 10px 0;
+    max-width: 300px;
+    background: #f8f8f8;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.image-preview img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    display: block;
+}
+
+/* 提交按钮 */
+.submit-btn {
+    padding: 1rem 2rem;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: background 0.3s ease;
+}
+
+.submit-btn:hover {
+    background: var(--secondary-color);
+}
+
+/* 登录模态框样式 */
+.login-modal {
+    max-width: 400px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.admin-panel {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    margin-bottom: 2rem;
+}
+
+.logout-btn {
+    background: #dc3545;
+}
+
+.logout-btn:hover {
+    background: #c82333;
+}
+
+/* 密码输入框样式 */
+.form-group input[type="password"] {
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-family: inherit;
+}
+
+.login-form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+    background: white;
+}
+
+.login-form input[type="password"]:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px rgba(255, 127, 80, 0.3);
+}
+
+.login-modal .submit-btn {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .modal {
+        padding: 20px 0;
+    }
+    
+    .modal-content {
+        width: 95%;
+        padding: 20px;
+        margin: 0 auto;
+    }
+    
+    .product-form {
+        gap: 1rem;
+    }
+}
+
+/* 确保滚动条样式统一 */
+.modal::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.modal::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.modal::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* 添加产品操作按钮样式 */
+.product-actions {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    display: flex;
+    gap: 0.5rem;
+    z-index: 1;
+}
+
+.delete-btn {
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.delete-btn:hover {
+    background: #c82333;
+    transform: scale(1.05);
+}
+
+.delete-btn i {
+    font-size: 1.2rem;
+}
+
+/* 服务列表样式 */
+.services-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 2rem 0;
+}
+
+.service-item {
+    background: white;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.service-item h2 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.service-item p {
+    color: #666;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.service-item ul {
+    list-style: none;
+    padding-left: 1.5rem;
+}
+
+.service-item li {
+    position: relative;
+    padding: 0.5rem 0;
+    color: #444;
+}
+
+.service-item li:before {
+    content: "•";
+    color: var(--primary-color);
+    position: absolute;
+    left: -1.5rem;
+} 
