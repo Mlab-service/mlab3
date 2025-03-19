@@ -1,33 +1,8 @@
-document.getElementById('contact-form').addEventListener('submit', function(event) {
-    event.preventDefault();
-    
-    // Show loading state
-    const submitButton = this.querySelector('button[type="submit"]');
-    const originalText = submitButton.textContent;
-    submitButton.textContent = 'Sending...';
-    submitButton.disabled = true;
-    
-    const serviceID = 'YOUR_SERVICE_ID'; // 替换为你的 EmailJS 服务 ID
-    const templateID = 'YOUR_TEMPLATE_ID'; // 替换为你的 EmailJS 模板 ID
-
-    // 发送邮件
-    emailjs.send(serviceID, templateID, {
-        name: this.name.value,
-        email: this.email.value,
-        message: this.message.value,
-        to_email: 'sales@mlab-technical.com.au, wscqdcn@hotmail.com' // 添加多个接收邮箱
-    })
-    .then(() => {
-        alert('Message sent successfully!'); // 英文提示
-        document.getElementById('contact-form').reset();
-    }, (err) => {
-        console.error('发送失败:', err);
-        alert(JSON.stringify(err));
-    })
-    .finally(function() {
-        submitButton.textContent = originalText;
-        submitButton.disabled = false;
-    });
+document.getElementById('contact-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    emailjs.sendForm('service_id', 'template_id', this)
+        .then(() => alert('Message sent!'))
+        .catch(err => console.error('Error:', err));
 });
 
 // Add smooth scrolling for navigation links

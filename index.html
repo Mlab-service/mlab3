@@ -153,42 +153,36 @@
     </script>
     <script src="script.js"></script>
 
-    <div id="products">
-        <script>
-        // 从GitHub加载商品数据
-        fetch('https://api.github.com/repos/Mlab-service/mlab3/contents/data/products')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
+    <!-- 新增商品数据加载容器 -->
+    <div id="product-data-container"></div>
+
+    <!-- 修改后的脚本部分 -->
+    <script>
+    // 修改容器 ID 引用
+    fetch('https://api.github.com/repos/Mlab-service/mlab3/contents/data/products')
+      .then(response => response.ok ? response.json() : Promise.reject('Network error'))
+      .then(files => {
+        files.forEach(file => {
+          fetch(file.download_url)
+            .then(res => res.json())
+            .then(product => {
+              const container = document.getElementById('product-data-container');
+              if (container) {
+                container.insertAdjacentHTML('beforeend', `
+                  <div class="product">
+                    <h2>${product.title}</h2>
+                    <p>Price: ¥${product.price}</p>
+                    <img src="https://raw.githubusercontent.com/Mlab-service/mlab3/main/${product.image}" alt="${product.title}" width="200">
+                    <p>${product.description}</p>
+                  </div>
+                `);
+              }
             })
-            .then(files => {
-                files.forEach(file => {
-                    fetch(file.download_url)
-                        .then(res => {
-                            if (!res.ok) {
-                                throw new Error('Network response was not ok');
-                            }
-                            return res.json();
-                        })
-                        .then(product => {
-                            const productHTML = `
-                                <div class="product">
-                                    <h2>${product.title}</h2>
-                                    <p>价格：¥${product.price}</p>
-                                    <img src="https://raw.githubusercontent.com/Mlab-service/mlab3/main/${product.image}" width="200">
-                                    <p>${product.description}</p>
-                                </div>
-                            `;
-                            document.getElementById('products').insertAdjacentHTML('beforeend', productHTML);
-                        })
-                        .catch(error => console.error('Error loading product:', error));
-                });
-            })
-            .catch(error => console.error('Error loading product list:', error));
-        </script>
-    </div>
+            .catch(console.error);
+        });
+      })
+      .catch(console.error);
+    </script>
 
     <button id="add-product-button" class="btn">Add New Product</button>
     <div id="add-product-form-container"></div>
