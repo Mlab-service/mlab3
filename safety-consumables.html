@@ -22,77 +22,17 @@
 
     <main>
         <section class="product-category-page">
-            <!-- 类别介绍 -->
             <div class="category-header">
                 <h1>Safety Consumables</h1>
                 <p class="category-description">
-                    Our safety consumables are designed to ensure workplace safety and compliance with safety regulations. 
-                    We offer a comprehensive range of personal protective equipment and safety materials.
+                    Our safety consumables are designed to ensure the highest level of protection and compliance in various environments.
                 </p>
             </div>
 
-            <!-- 产品列表 -->
             <div class="product-list" id="productList">
-                <!-- 产品将通过 JavaScript 动态添加 -->
+                <!-- 产品列表将通过 JavaScript 动态生成 -->
             </div>
 
-            <!-- 添加产品的弹窗表单 -->
-            <div id="addProductModal" class="modal">
-                <div class="modal-content">
-                    <span class="close-modal">&times;</span>
-                    <h2>Add New Product</h2>
-                    <form id="addProductForm" class="product-form">
-                        <div class="form-group">
-                            <label for="productName">Product Name:</label>
-                            <input type="text" id="productName" name="productName" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="productSpecs">Specifications:</label>
-                            <textarea id="productSpecs" name="productSpecs" required></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="productDescription">Description:</label>
-                            <textarea id="productDescription" name="productDescription" required></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Key Features:</label>
-                            <div id="featuresList" class="dynamic-list">
-                                <div class="list-item">
-                                    <input type="text" name="features[]" required>
-                                    <button type="button" class="add-item-btn">+</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Product Images:</label>
-                            <div class="image-upload">
-                                <input type="file" id="mainImage" name="mainImage" accept="image/*" required>
-                                <label for="mainImage" class="upload-label">
-                                    <i class="fas fa-cloud-upload-alt"></i>
-                                    <span>Upload Main Image</span>
-                                </label>
-                                <div id="mainImagePreview" class="image-preview"></div>
-                            </div>
-                            <div class="image-upload">
-                                <input type="file" id="secondaryImage" name="secondaryImage" accept="image/*">
-                                <label for="secondaryImage" class="upload-label">
-                                    <i class="fas fa-cloud-upload-alt"></i>
-                                    <span>Upload Additional Image (Optional)</span>
-                                </label>
-                                <div id="secondaryImagePreview" class="image-preview"></div>
-                            </div>
-                        </div>
-
-                        <button type="submit" class="submit-btn">Add Product</button>
-                    </form>
-                </div>
-            </div>
-
-            <!-- 询价部分 -->
             <div class="inquiry-section">
                 <h2>Request a Quote</h2>
                 <p>Interested in our products? Contact us for detailed information and pricing.</p>
@@ -110,18 +50,16 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // 检查管理员状态
         const isAdmin = localStorage.getItem('isAdmin') === 'true';
-        
-        // Admin access 功能
         const adminAccessButton = document.getElementById('admin-access');
         const formContainer = document.getElementById('add-product-form-container');
+        
+        loadProducts('safety');
         
         if (adminAccessButton) {
             adminAccessButton.addEventListener('click', function() {
                 const password = prompt('Enter admin password:');
                 if (password === '0030') {
-                    // 设置管理员状态
                     localStorage.setItem('isAdmin', 'true');
                     showAdminInterface();
                 } else {
@@ -130,13 +68,11 @@
             });
         }
         
-        // 如果是管理员，显示管理界面
         if (isAdmin) {
             showAdminInterface();
         }
         
         function showAdminInterface() {
-            // 显示添加产品表单
             if (formContainer) {
                 formContainer.style.display = 'block';
                 formContainer.innerHTML = `
@@ -165,36 +101,170 @@
                     </div>
                 `;
                 
-                // 添加表单提交事件
                 const form = document.getElementById('add-product-form');
                 if (form) {
                     form.addEventListener('submit', function(e) {
                         e.preventDefault();
-                        // 这里添加保存产品的逻辑
-                        alert('Product added successfully!');
-                        this.reset();
+                        const product = document.getElementById('product').value;
+                        const code = document.getElementById('code').value;
+                        const specifications = document.getElementById('specifications').value;
+                        const imageFile = document.getElementById('image').files[0];
+                        
+                        if (imageFile) {
+                            const reader = new FileReader();
+                            reader.onload = function(event) {
+                                saveProduct('safety', {
+                                    product: product,
+                                    code: code,
+                                    specifications: specifications,
+                                    image: event.target.result,
+                                    id: Date.now().toString()
+                                });
+                                alert('产品添加成功！');
+                                form.reset();
+                                loadProducts('safety');
+                            };
+                            reader.readAsDataURL(imageFile);
+                        } else {
+                            saveProduct('safety', {
+                                product: product,
+                                code: code,
+                                specifications: specifications,
+                                image: '',
+                                id: Date.now().toString()
+                            });
+                            alert('产品添加成功！');
+                            form.reset();
+                            loadProducts('safety');
+                        }
                     });
                 }
             }
             
-            // 显示所有删除按钮
             const deleteButtons = document.querySelectorAll('.delete-button');
             deleteButtons.forEach(button => {
                 button.style.display = 'block';
             });
             
-            // 隐藏admin access按钮
             if (adminAccessButton) {
                 adminAccessButton.style.display = 'none';
             }
         }
         
-        // 添加登出功能
         window.logout = function() {
             localStorage.removeItem('isAdmin');
             location.reload();
         };
+        
+        function saveProduct(category, productData) {
+            let products = JSON.parse(localStorage.getItem(`${category}Products`) || '[]');
+            products.push(productData);
+            localStorage.setItem(`${category}Products`, JSON.stringify(products));
+        }
+        
+        function loadProducts(category) {
+            const productList = document.getElementById('productList');
+            if (!productList) return;
+            
+            let products = JSON.parse(localStorage.getItem(`${category}Products`) || '[]');
+            productList.innerHTML = '';
+            
+            products.forEach(product => {
+                const productElement = document.createElement('div');
+                productElement.className = 'product-item';
+                productElement.dataset.id = product.id;
+                
+                let imageHtml = '';
+                if (product.image) {
+                    imageHtml = `<img src="${product.image}" alt="${product.product}" class="product-image">`;
+                }
+                
+                productElement.innerHTML = `
+                    <div class="product-header">
+                        <h3>${product.product || 'No Name'}</h3>
+                        ${isAdmin ? '<button class="delete-button" onclick="deleteProduct(\'safety\', \'' + product.id + '\')">×</button>' : ''}
+                    </div>
+                    ${imageHtml}
+                    <p class="product-code">Code: ${product.code || 'N/A'}</p>
+                    <p class="product-specs">${product.specifications || 'No specifications provided'}</p>
+                `;
+                
+                productList.appendChild(productElement);
+            });
+        }
+        
+        window.deleteProduct = function(category, productId) {
+            if (confirm('确定要删除这个产品吗？')) {
+                let products = JSON.parse(localStorage.getItem(`${category}Products`) || '[]');
+                products = products.filter(p => p.id !== productId);
+                localStorage.setItem(`${category}Products`, JSON.stringify(products));
+                loadProducts(category);
+            }
+        };
     });
     </script>
+
+    <style>
+    .admin-panel {
+        background: #f5f5f5;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px auto;
+        max-width: 600px;
+    }
+
+    .logout-btn {
+        background: #ff4444;
+        color: white;
+        margin-top: 10px;
+    }
+
+    .delete-button {
+        display: none;
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background: red;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 25px;
+        height: 25px;
+        font-size: 14px;
+        cursor: pointer;
+        text-align: center;
+        line-height: 25px;
+    }
+
+    .product-item {
+        position: relative;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 20px;
+        background: white;
+    }
+
+    .product-header {
+        position: relative;
+        margin-bottom: 10px;
+    }
+
+    .product-image {
+        max-width: 100%;
+        max-height: 200px;
+        margin-bottom: 10px;
+    }
+
+    .product-code {
+        color: #666;
+        font-size: 0.9em;
+        margin-bottom: 8px;
+    }
+
+    .product-specs {
+        white-space: pre-line;
+    }
+    </style>
 </body>
 </html> 
