@@ -12,7 +12,7 @@ document.getElementById('contact-form').addEventListener('submit', function(even
         from_name: document.getElementById('name').value,
         from_email: document.getElementById('email').value,
         message: document.getElementById('message').value,
-        to_email: 'sales@mlab-technical.com.au'  // 接收邮件的地址
+        to_email: 'wscqdcn@hotmail.com'  // 指定接收邮件的地址
     };
 
     // 发送邮件
