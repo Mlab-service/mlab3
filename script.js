@@ -106,33 +106,35 @@ window.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-document.getElementById('add-product-button').addEventListener('click', function() {
-    console.log('Add New Product button clicked'); // 调试信息
-    const formContainer = document.getElementById('add-product-form-container');
-    if (formContainer) {
-        console.log('Form container found'); // 调试信息
-        formContainer.innerHTML = `
-            <form id="add-product-form" class="add-product-form">
-                <div class="form-group">
-                    <label for="product">Product:</label>
-                    <input type="text" id="product" name="product">
-                </div>
-                <div class="form-group">
-                    <label for="code">Code:</label>
-                    <input type="text" id="code" name="code">
-                </div>
-                <div class="form-group">
-                    <label for="specifications">Specifications:</label>
-                    <textarea id="specifications" name="specifications"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="image">Image:</label>
-                    <input type="file" id="image" name="image" accept="image/*">
-                </div>
-                <button type="submit" class="btn">Add Product</button>
-            </form>
-        `;
-    } else {
-        console.error('Form container not found'); // 调试信息
-    }
-});
+// 删除与添加新产品相关的JavaScript功能
+// document.getElementById('add-product-button').addEventListener('click', function() {
+//     console.log('Add New Product button clicked'); // 调试信息
+//     const formContainer = document.getElementById('add-product-form-container');
+//     if (formContainer) {
+//         console.log('Form container found'); // 调试信息
+//         formContainer.innerHTML = `
+//             <form id="add-product-form" class="add-product-form">
+//                 <div class="form-group">
+//                     <label for="product">Product:</label>
+//                     <input type="text" id="product" name="product">
+//                 </div>
+//                 <div class="form-group">
+//                     <label for="code">Code:</label>
+//                     <input type="text" id="code" name="code">
+//                 </div>
+//                 <div class="form-group">
+//                     <label for="specifications">Specifications:</label>
+//                     <textarea id="specifications" name="specifications"></textarea>
+//                 </div>
+//                 <div class="form-group">
+//                     <label for="image">Image:</label>
+//                     <input type="file" id="image" name="image" accept="image/*">
+//                 </div>
+//                 <button type="submit" class="btn">Add Product</button>
+//             </form>
+//         `;
+//         console.log('Form content updated'); // 调试信息
+//     } else {
+//         console.error('Form container not found'); // 调试信息
+//     }
+// });
