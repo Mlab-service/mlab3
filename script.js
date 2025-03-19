@@ -16,7 +16,7 @@ document.getElementById('contact-form').addEventListener('submit', function(even
     };
 
     // 发送邮件
-    emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+    emailjs.send('service_fo32n3u', 'template_dce6ut4', templateParams)
         .then(function(response) {
             alert('消息发送成功！');
             document.getElementById('contact-form').reset();
