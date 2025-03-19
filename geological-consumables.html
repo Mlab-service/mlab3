@@ -22,18 +22,6 @@
 
     <main>
         <section class="product-category-page">
-            <!-- Admin Controls -->
-            <div class="admin-controls">
-                <button id="adminLoginBtn" class="admin-btn">
-                    <i class="fas fa-lock"></i> Admin Access
-                </button>
-                <div id="adminPanel" class="admin-panel" style="display: none;">
-                    <button id="addProductBtn" class="admin-btn">
-                        <i class="fas fa-plus"></i> Add New Product
-                    </button>
-                </div>
-            </div>
-
             <!-- 类别介绍 -->
             <div class="category-header">
                 <h1>Geological Consumables</h1>
@@ -115,8 +103,65 @@
 
     <footer>
         <p>&copy; 2024 Mlab Technical Service. All rights reserved.</p>
+        <div id="admin-access">Admin Access</div>
     </footer>
 
-    <script src="product-management.js"></script>
+    <div id="add-product-form-container" style="display: none;"></div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Admin access 功能
+        const adminAccessButton = document.getElementById('admin-access');
+        if (adminAccessButton) {
+            adminAccessButton.addEventListener('click', function() {
+                const password = prompt('Enter admin password:');
+                if (password === 'your_admin_password') { // 替换为实际管理员密码
+                    // 显示添加产品表单
+                    const formContainer = document.getElementById('add-product-form-container');
+                    if (formContainer) {
+                        formContainer.style.display = 'block';
+                        formContainer.innerHTML = `
+                            <form id="add-product-form" class="add-product-form">
+                                <div class="form-group">
+                                    <label for="product">Product:</label>
+                                    <input type="text" id="product" name="product">
+                                </div>
+                                <div class="form-group">
+                                    <label for="code">Code:</label>
+                                    <input type="text" id="code" name="code">
+                                </div>
+                                <div class="form-group">
+                                    <label for="specifications">Specifications:</label>
+                                    <textarea id="specifications" name="specifications"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="image">Image:</label>
+                                    <input type="file" id="image" name="image" accept="image/*">
+                                </div>
+                                <button type="submit" class="btn">Add Product</button>
+                            </form>
+                        `;
+                    }
+                    
+                    // 设置管理员状态
+                    localStorage.setItem('isAdmin', 'true');
+                    
+                    // 刷新页面以显示删除按钮
+                    location.reload();
+                } else {
+                    alert('Incorrect password');
+                }
+            });
+        }
+        
+        // 处理删除按钮的显示/隐藏
+        const isAdmin = localStorage.getItem('isAdmin') === 'true';
+        const deleteButtons = document.querySelectorAll('.delete-button');
+        
+        deleteButtons.forEach(button => {
+            button.style.display = isAdmin ? 'block' : 'none';
+        });
+    });
+    </script>
 </body>
 </html> 

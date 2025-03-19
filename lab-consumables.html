@@ -22,94 +22,6 @@
 
     <main>
         <section class="product-category-page">
-            <!-- 修改 admin-controls 部分 -->
-            <div class="admin-controls">
-                <button id="adminLoginBtn" class="admin-btn">
-                    <i class="fas fa-lock"></i> Admin Access
-                </button>
-                <div id="adminPanel" class="admin-panel" style="display: none;">
-                    <button id="addProductBtn" class="admin-btn">
-                        <i class="fas fa-plus"></i> Add New Product
-                    </button>
-                </div>
-            </div>
-
-            <!-- 修改登录模态框部分 -->
-            <div id="loginModal" class="modal">
-                <div class="modal-content login-modal">
-                    <span class="close-modal">&times;</span>
-                    <h2>Admin Login</h2>
-                    <form id="loginForm" class="login-form">
-                        <div class="form-group">
-                            <label for="password">Password:</label>
-                            <input type="password" 
-                                   id="password" 
-                                   name="password" 
-                                   required 
-                                   autofocus
-                                   placeholder="Enter password">
-                        </div>
-                        <button type="submit" class="submit-btn">Login</button>
-                    </form>
-                </div>
-            </div>
-
-            <!-- 添加产品的弹窗表单 -->
-            <div id="addProductModal" class="modal">
-                <div class="modal-content">
-                    <span class="close-modal">&times;</span>
-                    <h2>Add New Product</h2>
-                    <form id="addProductForm" class="product-form">
-                        <div class="form-group">
-                            <label for="productName">Product Name:</label>
-                            <input type="text" id="productName" name="productName" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="productSpecs">Specifications:</label>
-                            <textarea id="productSpecs" name="productSpecs" required></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="productDescription">Description:</label>
-                            <textarea id="productDescription" name="productDescription" required></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Key Features:</label>
-                            <div id="featuresList" class="dynamic-list">
-                                <div class="list-item">
-                                    <input type="text" name="features[]" required>
-                                    <button type="button" class="add-item-btn">+</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Product Images:</label>
-                            <div class="image-upload">
-                                <input type="file" id="mainImage" name="mainImage" accept="image/*" required>
-                                <label for="mainImage" class="upload-label">
-                                    <i class="fas fa-cloud-upload-alt"></i>
-                                    <span>Upload Main Image</span>
-                                </label>
-                                <div id="mainImagePreview" class="image-preview"></div>
-                            </div>
-                            <div class="image-upload">
-                                <input type="file" id="secondaryImage" name="secondaryImage" accept="image/*">
-                                <label for="secondaryImage" class="upload-label">
-                                    <i class="fas fa-cloud-upload-alt"></i>
-                                    <span>Upload Additional Image (Optional)</span>
-                                </label>
-                                <div id="secondaryImagePreview" class="image-preview"></div>
-                            </div>
-                        </div>
-
-                        <button type="submit" class="submit-btn">Add Product</button>
-                    </form>
-                </div>
-            </div>
-
             <!-- 类别介绍 -->
             <div class="category-header">
                 <h1>Laboratory Consumables</h1>
@@ -135,8 +47,65 @@
 
     <footer>
         <p>&copy; 2024 Mlab Technical Service. All rights reserved.</p>
+        <div id="admin-access">Admin Access</div>
     </footer>
 
-    <script src="product-management.js"></script>
+    <div id="add-product-form-container" style="display: none;"></div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Admin access 功能
+        const adminAccessButton = document.getElementById('admin-access');
+        if (adminAccessButton) {
+            adminAccessButton.addEventListener('click', function() {
+                const password = prompt('Enter admin password:');
+                if (password === 'your_admin_password') { // 替换为实际管理员密码
+                    // 显示添加产品表单
+                    const formContainer = document.getElementById('add-product-form-container');
+                    if (formContainer) {
+                        formContainer.style.display = 'block';
+                        formContainer.innerHTML = `
+                            <form id="add-product-form" class="add-product-form">
+                                <div class="form-group">
+                                    <label for="product">Product:</label>
+                                    <input type="text" id="product" name="product">
+                                </div>
+                                <div class="form-group">
+                                    <label for="code">Code:</label>
+                                    <input type="text" id="code" name="code">
+                                </div>
+                                <div class="form-group">
+                                    <label for="specifications">Specifications:</label>
+                                    <textarea id="specifications" name="specifications"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="image">Image:</label>
+                                    <input type="file" id="image" name="image" accept="image/*">
+                                </div>
+                                <button type="submit" class="btn">Add Product</button>
+                            </form>
+                        `;
+                    }
+                    
+                    // 设置管理员状态
+                    localStorage.setItem('isAdmin', 'true');
+                    
+                    // 刷新页面以显示删除按钮
+                    location.reload();
+                } else {
+                    alert('Incorrect password');
+                }
+            });
+        }
+        
+        // 处理删除按钮的显示/隐藏
+        const isAdmin = localStorage.getItem('isAdmin') === 'true';
+        const deleteButtons = document.querySelectorAll('.delete-button');
+        
+        deleteButtons.forEach(button => {
+            button.style.display = isAdmin ? 'block' : 'none';
+        });
+    });
+    </script>
 </body>
 </html> 
