@@ -180,13 +180,19 @@
                 }
                 
                 productElement.innerHTML = `
-                    <div class="product-header">
-                        <h3>${product.product || 'No Name'}</h3>
-                        ${isAdmin ? '<button class="delete-button" onclick="deleteProduct(\'safety\', \'' + product.id + '\')">×</button>' : ''}
+                    <div class="product-content">
+                        <div class="product-image-container">
+                            ${imageHtml}
+                        </div>
+                        <div class="product-details">
+                            <div class="product-header">
+                                <h3 class="product-name">${product.product || 'No Name'}</h3>
+                                <span class="product-code">Code: ${product.code || 'N/A'}</span>
+                                ${isAdmin ? '<button class="delete-button" onclick="deleteProduct(\'' + category + '\', \'' + product.id + '\')">×</button>' : ''}
+                            </div>
+                            <p class="product-specs">${product.specifications || 'No specifications provided'}</p>
+                        </div>
                     </div>
-                    ${imageHtml}
-                    <p class="product-code">Code: ${product.code || 'N/A'}</p>
-                    <p class="product-specs">${product.specifications || 'No specifications provided'}</p>
                 `;
                 
                 productList.appendChild(productElement);
@@ -264,6 +270,37 @@
 
     .product-specs {
         white-space: pre-line;
+    }
+
+    .product-content {
+        display: flex;
+        align-items: center;
+    }
+
+    .product-image-container {
+        flex: 0 0 100px; /* 固定宽度 */
+        margin-right: 15px; /* 图片与文本之间的间距 */
+    }
+
+    .product-image {
+        max-width: 100%;
+        max-height: 100px; /* 限制图片高度 */
+        border-radius: 8px; /* 圆角 */
+    }
+
+    .product-details {
+        flex: 1; /* 让文本部分占据剩余空间 */
+    }
+
+    .product-name {
+        font-size: 1.1em; /* 产品名称字体大小 */
+        margin: 0; /* 去掉默认的margin */
+    }
+
+    .product-code {
+        font-size: 0.9em; /* 代码字体大小 */
+        color: #666; /* 代码颜色 */
+        margin-left: 10px; /* 产品名称和代码之间的间距 */
     }
     </style>
 </body>
