@@ -110,62 +110,90 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // 检查管理员状态
+        const isAdmin = localStorage.getItem('isAdmin') === 'true';
+        
         // Admin access 功能
         const adminAccessButton = document.getElementById('admin-access');
-        console.log('Admin button found:', adminAccessButton); // 添加调试信息
+        const formContainer = document.getElementById('add-product-form-container');
         
         if (adminAccessButton) {
             adminAccessButton.addEventListener('click', function() {
-                console.log('Admin button clicked'); // 添加调试信息
                 const password = prompt('Enter admin password:');
-                if (password === '0030') { // 修改为新密码0030
-                    // 显示添加产品表单
-                    const formContainer = document.getElementById('add-product-form-container');
-                    if (formContainer) {
-                        formContainer.style.display = 'block';
-                        formContainer.innerHTML = `
-                            <form id="add-product-form" class="add-product-form">
-                                <div class="form-group">
-                                    <label for="product">Product:</label>
-                                    <input type="text" id="product" name="product">
-                                </div>
-                                <div class="form-group">
-                                    <label for="code">Code:</label>
-                                    <input type="text" id="code" name="code">
-                                </div>
-                                <div class="form-group">
-                                    <label for="specifications">Specifications:</label>
-                                    <textarea id="specifications" name="specifications"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label for="image">Image:</label>
-                                    <input type="file" id="image" name="image" accept="image/*">
-                                </div>
-                                <button type="submit" class="btn">Add Product</button>
-                            </form>
-                        `;
-                    }
-                    
+                if (password === '0030') {
                     // 设置管理员状态
                     localStorage.setItem('isAdmin', 'true');
-                    
-                    // 刷新页面以显示删除按钮
-                    location.reload();
+                    showAdminInterface();
                 } else {
                     alert('Incorrect password');
                 }
             });
-        } else {
-            console.error('Admin button not found'); // 添加调试信息
         }
         
-        // 处理删除按钮的显示/隐藏
-        const isAdmin = localStorage.getItem('isAdmin') === 'true';
-        const deleteButtons = document.querySelectorAll('.delete-button');
+        // 如果是管理员，显示管理界面
+        if (isAdmin) {
+            showAdminInterface();
+        }
         
-        deleteButtons.forEach(button => {
-            button.style.display = isAdmin ? 'block' : 'none';
-        });
+        function showAdminInterface() {
+            // 显示添加产品表单
+            if (formContainer) {
+                formContainer.style.display = 'block';
+                formContainer.innerHTML = `
+                    <div class="admin-panel">
+                        <h3>Admin Panel</h3>
+                        <form id="add-product-form" class="add-product-form">
+                            <div class="form-group">
+                                <label for="product">Product:</label>
+                                <input type="text" id="product" name="product">
+                            </div>
+                            <div class="form-group">
+                                <label for="code">Code:</label>
+                                <input type="text" id="code" name="code">
+                            </div>
+                            <div class="form-group">
+                                <label for="specifications">Specifications:</label>
+                                <textarea id="specifications" name="specifications"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="image">Image:</label>
+                                <input type="file" id="image" name="image" accept="image/*">
+                            </div>
+                            <button type="submit" class="btn">Add Product</button>
+                        </form>
+                        <button onclick="logout()" class="btn logout-btn">Logout</button>
+                    </div>
+                `;
+                
+                // 添加表单提交事件
+                const form = document.getElementById('add-product-form');
+                if (form) {
+                    form.addEventListener('submit', function(e) {
+                        e.preventDefault();
+                        // 这里添加保存产品的逻辑
+                        alert('Product added successfully!');
+                        this.reset();
+                    });
+                }
+            }
+            
+            // 显示所有删除按钮
+            const deleteButtons = document.querySelectorAll('.delete-button');
+            deleteButtons.forEach(button => {
+                button.style.display = 'block';
+            });
+            
+            // 隐藏admin access按钮
+            if (adminAccessButton) {
+                adminAccessButton.style.display = 'none';
+            }
+        }
+        
+        // 添加登出功能
+        window.logout = function() {
+            localStorage.removeItem('isAdmin');
+            location.reload();
+        };
     });
     </script>
 </body>
