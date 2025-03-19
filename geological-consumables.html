@@ -180,13 +180,19 @@
                 }
                 
                 productElement.innerHTML = `
-                    <div class="product-header">
-                        <h3>${product.product || 'No Name'}</h3>
-                        ${isAdmin ? '<button class="delete-button" onclick="deleteProduct(\'geological\', \'' + product.id + '\')">×</button>' : ''}
+                    <div class="product-content">
+                        <div class="product-image-container">
+                            ${imageHtml}
+                        </div>
+                        <div class="product-details">
+                            <div class="product-header">
+                                <h3>${product.product || 'No Name'}</h3>
+                                ${isAdmin ? '<button class="delete-button" onclick="deleteProduct(\'' + category + '\', \'' + product.id + '\')">×</button>' : ''}
+                            </div>
+                            <p class="product-code">Code: ${product.code || 'N/A'}</p>
+                            <p class="product-specs">${product.specifications || 'No specifications provided'}</p>
+                        </div>
                     </div>
-                    ${imageHtml}
-                    <p class="product-code">Code: ${product.code || 'N/A'}</p>
-                    <p class="product-specs">${product.specifications || 'No specifications provided'}</p>
                 `;
                 
                 productList.appendChild(productElement);
@@ -264,6 +270,26 @@
 
     .product-specs {
         white-space: pre-line;
+    }
+
+    .product-content {
+        display: flex;
+        align-items: center;
+    }
+
+    .product-image-container {
+        flex: 0 0 150px; /* 固定宽度 */
+        margin-right: 15px; /* 图片与文本之间的间距 */
+    }
+
+    .product-image {
+        max-width: 100%;
+        max-height: 150px; /* 限制图片高度 */
+        border-radius: 8px; /* 圆角 */
+    }
+
+    .product-details {
+        flex: 1; /* 让文本部分占据剩余空间 */
     }
     </style>
 </body>

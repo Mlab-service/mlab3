@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laboratory Consumables - MLab Technical</title>
+    <title>Lab Consumables - MLab Technical</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
@@ -22,21 +22,17 @@
 
     <main>
         <section class="product-category-page">
-            <!-- 类别介绍 -->
             <div class="category-header">
-                <h1>Laboratory Consumables</h1>
+                <h1>Lab Consumables</h1>
                 <p class="category-description">
-                    Our comprehensive range of laboratory consumables is designed to meet the highest standards of quality and reliability. 
-                    We offer a wide selection of products essential for daily laboratory operations, ensuring precision and efficiency in your work.
+                    Our lab consumables are designed to meet the highest standards of quality and reliability for laboratory operations.
                 </p>
             </div>
 
-            <!-- 产品列表 -->
             <div class="product-list" id="productList">
                 <!-- 产品列表将通过 JavaScript 动态生成 -->
             </div>
 
-            <!-- 询价部分 -->
             <div class="inquiry-section">
                 <h2>Request a Quote</h2>
                 <p>Interested in our products? Contact us for detailed information and pricing.</p>
@@ -54,21 +50,16 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // 检查管理员状态
         const isAdmin = localStorage.getItem('isAdmin') === 'true';
-        
-        // Admin access 功能
         const adminAccessButton = document.getElementById('admin-access');
         const formContainer = document.getElementById('add-product-form-container');
         
-        // 加载产品列表
         loadProducts('lab');
         
         if (adminAccessButton) {
             adminAccessButton.addEventListener('click', function() {
                 const password = prompt('Enter admin password:');
                 if (password === '0030') {
-                    // 设置管理员状态
                     localStorage.setItem('isAdmin', 'true');
                     showAdminInterface();
                 } else {
@@ -77,13 +68,11 @@
             });
         }
         
-        // 如果是管理员，显示管理界面
         if (isAdmin) {
             showAdminInterface();
         }
         
         function showAdminInterface() {
-            // 显示添加产品表单
             if (formContainer) {
                 formContainer.style.display = 'block';
                 formContainer.innerHTML = `
@@ -112,23 +101,18 @@
                     </div>
                 `;
                 
-                // 添加表单提交事件
                 const form = document.getElementById('add-product-form');
                 if (form) {
                     form.addEventListener('submit', function(e) {
                         e.preventDefault();
-                        
-                        // 获取表单数据
                         const product = document.getElementById('product').value;
                         const code = document.getElementById('code').value;
                         const specifications = document.getElementById('specifications').value;
                         const imageFile = document.getElementById('image').files[0];
                         
-                        // 如果有图片文件，读取为 base64
                         if (imageFile) {
                             const reader = new FileReader();
                             reader.onload = function(event) {
-                                // 保存产品数据
                                 saveProduct('lab', {
                                     product: product,
                                     code: code,
@@ -136,16 +120,12 @@
                                     image: event.target.result,
                                     id: Date.now().toString()
                                 });
-                                
                                 alert('产品添加成功！');
                                 form.reset();
-                                
-                                // 重新加载产品列表
                                 loadProducts('lab');
                             };
                             reader.readAsDataURL(imageFile);
                         } else {
-                            // 没有图片的情况
                             saveProduct('lab', {
                                 product: product,
                                 code: code,
@@ -153,53 +133,42 @@
                                 image: '',
                                 id: Date.now().toString()
                             });
-                            
                             alert('产品添加成功！');
                             form.reset();
-                            
-                            // 重新加载产品列表
                             loadProducts('lab');
                         }
                     });
                 }
             }
             
-            // 显示所有删除按钮
             const deleteButtons = document.querySelectorAll('.delete-button');
             deleteButtons.forEach(button => {
                 button.style.display = 'block';
             });
             
-            // 隐藏admin access按钮
             if (adminAccessButton) {
                 adminAccessButton.style.display = 'none';
             }
         }
         
-        // 添加登出功能
         window.logout = function() {
             localStorage.removeItem('isAdmin');
             location.reload();
         };
         
-        // 保存产品数据到localStorage
         function saveProduct(category, productData) {
             let products = JSON.parse(localStorage.getItem(`${category}Products`) || '[]');
             products.push(productData);
             localStorage.setItem(`${category}Products`, JSON.stringify(products));
         }
         
-        // 从localStorage加载产品数据并显示
         function loadProducts(category) {
             const productList = document.getElementById('productList');
             if (!productList) return;
             
             let products = JSON.parse(localStorage.getItem(`${category}Products`) || '[]');
-            
-            // 清空现有产品列表
             productList.innerHTML = '';
             
-            // 添加产品到页面
             products.forEach(product => {
                 const productElement = document.createElement('div');
                 productElement.className = 'product-item';
@@ -211,27 +180,30 @@
                 }
                 
                 productElement.innerHTML = `
-                    <div class="product-header">
-                        <h3>${product.product || 'No Name'}</h3>
-                        ${isAdmin ? '<button class="delete-button" onclick="deleteProduct(\'lab\', \'' + product.id + '\')">×</button>' : ''}
+                    <div class="product-content">
+                        <div class="product-image-container">
+                            ${imageHtml}
+                        </div>
+                        <div class="product-details">
+                            <div class="product-header">
+                                <h3>${product.product || 'No Name'}</h3>
+                                ${isAdmin ? '<button class="delete-button" onclick="deleteProduct(\'' + category + '\', \'' + product.id + '\')">×</button>' : ''}
+                            </div>
+                            <p class="product-code">Code: ${product.code || 'N/A'}</p>
+                            <p class="product-specs">${product.specifications || 'No specifications provided'}</p>
+                        </div>
                     </div>
-                    ${imageHtml}
-                    <p class="product-code">Code: ${product.code || 'N/A'}</p>
-                    <p class="product-specs">${product.specifications || 'No specifications provided'}</p>
                 `;
                 
                 productList.appendChild(productElement);
             });
         }
         
-        // 删除产品
         window.deleteProduct = function(category, productId) {
             if (confirm('确定要删除这个产品吗？')) {
                 let products = JSON.parse(localStorage.getItem(`${category}Products`) || '[]');
                 products = products.filter(p => p.id !== productId);
                 localStorage.setItem(`${category}Products`, JSON.stringify(products));
-                
-                // 重新加载产品列表
                 loadProducts(category);
             }
         };
@@ -298,6 +270,26 @@
 
     .product-specs {
         white-space: pre-line;
+    }
+
+    .product-content {
+        display: flex;
+        align-items: center;
+    }
+
+    .product-image-container {
+        flex: 0 0 150px; /* 固定宽度 */
+        margin-right: 15px; /* 图片与文本之间的间距 */
+    }
+
+    .product-image {
+        max-width: 100%;
+        max-height: 150px; /* 限制图片高度 */
+        border-radius: 8px; /* 圆角 */
+    }
+
+    .product-details {
+        flex: 1; /* 让文本部分占据剩余空间 */
     }
     </style>
 </body>
