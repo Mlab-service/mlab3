@@ -211,7 +211,7 @@
             const formData = new FormData();
             formData.append('image', file);
 
-            fetch('http://localhost:3000/upload', {
+            fetch('http://localhost:3000/upload', { // 确保这个 URL 指向你的服务器
                 method: 'POST',
                 body: formData
             })
