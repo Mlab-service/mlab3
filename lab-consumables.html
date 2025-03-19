@@ -61,6 +61,9 @@
         const adminAccessButton = document.getElementById('admin-access');
         const formContainer = document.getElementById('add-product-form-container');
         
+        // 加载产品列表
+        loadProducts('lab');
+        
         if (adminAccessButton) {
             adminAccessButton.addEventListener('click', function() {
                 const password = prompt('Enter admin password:');
@@ -114,9 +117,49 @@
                 if (form) {
                     form.addEventListener('submit', function(e) {
                         e.preventDefault();
-                        // 这里添加保存产品的逻辑
-                        alert('Product added successfully!');
-                        this.reset();
+                        
+                        // 获取表单数据
+                        const product = document.getElementById('product').value;
+                        const code = document.getElementById('code').value;
+                        const specifications = document.getElementById('specifications').value;
+                        const imageFile = document.getElementById('image').files[0];
+                        
+                        // 如果有图片文件，读取为 base64
+                        if (imageFile) {
+                            const reader = new FileReader();
+                            reader.onload = function(event) {
+                                // 保存产品数据
+                                saveProduct('lab', {
+                                    product: product,
+                                    code: code,
+                                    specifications: specifications,
+                                    image: event.target.result,
+                                    id: Date.now().toString()
+                                });
+                                
+                                alert('产品添加成功！');
+                                form.reset();
+                                
+                                // 重新加载产品列表
+                                loadProducts('lab');
+                            };
+                            reader.readAsDataURL(imageFile);
+                        } else {
+                            // 没有图片的情况
+                            saveProduct('lab', {
+                                product: product,
+                                code: code,
+                                specifications: specifications,
+                                image: '',
+                                id: Date.now().toString()
+                            });
+                            
+                            alert('产品添加成功！');
+                            form.reset();
+                            
+                            // 重新加载产品列表
+                            loadProducts('lab');
+                        }
                     });
                 }
             }
@@ -138,6 +181,60 @@
             localStorage.removeItem('isAdmin');
             location.reload();
         };
+        
+        // 保存产品数据到localStorage
+        function saveProduct(category, productData) {
+            let products = JSON.parse(localStorage.getItem(`${category}Products`) || '[]');
+            products.push(productData);
+            localStorage.setItem(`${category}Products`, JSON.stringify(products));
+        }
+        
+        // 从localStorage加载产品数据并显示
+        function loadProducts(category) {
+            const productList = document.getElementById('productList');
+            if (!productList) return;
+            
+            let products = JSON.parse(localStorage.getItem(`${category}Products`) || '[]');
+            
+            // 清空现有产品列表
+            productList.innerHTML = '';
+            
+            // 添加产品到页面
+            products.forEach(product => {
+                const productElement = document.createElement('div');
+                productElement.className = 'product-item';
+                productElement.dataset.id = product.id;
+                
+                let imageHtml = '';
+                if (product.image) {
+                    imageHtml = `<img src="${product.image}" alt="${product.product}" class="product-image">`;
+                }
+                
+                productElement.innerHTML = `
+                    <div class="product-header">
+                        <h3>${product.product || 'No Name'}</h3>
+                        ${isAdmin ? '<button class="delete-button" onclick="deleteProduct(\'lab\', \'' + product.id + '\')">×</button>' : ''}
+                    </div>
+                    ${imageHtml}
+                    <p class="product-code">Code: ${product.code || 'N/A'}</p>
+                    <p class="product-specs">${product.specifications || 'No specifications provided'}</p>
+                `;
+                
+                productList.appendChild(productElement);
+            });
+        }
+        
+        // 删除产品
+        window.deleteProduct = function(category, productId) {
+            if (confirm('确定要删除这个产品吗？')) {
+                let products = JSON.parse(localStorage.getItem(`${category}Products`) || '[]');
+                products = products.filter(p => p.id !== productId);
+                localStorage.setItem(`${category}Products`, JSON.stringify(products));
+                
+                // 重新加载产品列表
+                loadProducts(category);
+            }
+        };
     });
     </script>
 
@@ -158,6 +255,49 @@
 
     .delete-button {
         display: none;
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background: red;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 25px;
+        height: 25px;
+        font-size: 14px;
+        cursor: pointer;
+        text-align: center;
+        line-height: 25px;
+    }
+
+    .product-item {
+        position: relative;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 20px;
+        background: white;
+    }
+
+    .product-header {
+        position: relative;
+        margin-bottom: 10px;
+    }
+
+    .product-image {
+        max-width: 100%;
+        max-height: 200px;
+        margin-bottom: 10px;
+    }
+
+    .product-code {
+        color: #666;
+        font-size: 0.9em;
+        margin-bottom: 8px;
+    }
+
+    .product-specs {
+        white-space: pre-line;
     }
     </style>
 </body>
