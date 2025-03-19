@@ -112,8 +112,11 @@
     document.addEventListener('DOMContentLoaded', function() {
         // Admin access 功能
         const adminAccessButton = document.getElementById('admin-access');
+        console.log('Admin button found:', adminAccessButton); // 添加调试信息
+        
         if (adminAccessButton) {
             adminAccessButton.addEventListener('click', function() {
+                console.log('Admin button clicked'); // 添加调试信息
                 const password = prompt('Enter admin password:');
                 if (password === 'your_admin_password') { // 替换为实际管理员密码
                     // 显示添加产品表单
@@ -140,6 +143,30 @@
                                 </div>
                                 <button type="submit" class="btn">Add Product</button>
                             </form>
-    <script src="product-management.js"></script>
+                        `;
+                    }
+                    
+                    // 设置管理员状态
+                    localStorage.setItem('isAdmin', 'true');
+                    
+                    // 刷新页面以显示删除按钮
+                    location.reload();
+                } else {
+                    alert('Incorrect password');
+                }
+            });
+        } else {
+            console.error('Admin button not found'); // 添加调试信息
+        }
+        
+        // 处理删除按钮的显示/隐藏
+        const isAdmin = localStorage.getItem('isAdmin') === 'true';
+        const deleteButtons = document.querySelectorAll('.delete-button');
+        
+        deleteButtons.forEach(button => {
+            button.style.display = isAdmin ? 'block' : 'none';
+        });
+    });
+    </script>
 </body>
 </html> 
