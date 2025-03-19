@@ -91,3 +91,17 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+// 检查用户是否是管理员
+function isAdmin() {
+    // 这里可以添加实际的管理员验证逻辑
+    return false; // 默认返回false，表示非管理员
+}
+
+// 在页面加载时检查并隐藏删除按钮
+window.addEventListener('DOMContentLoaded', function() {
+    if (!isAdmin()) {
+        const deleteButtons = document.querySelectorAll('.delete-button');
+        deleteButtons.forEach(button => button.style.display = 'none');
+    }
+});
