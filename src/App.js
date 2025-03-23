@@ -1,7 +1,7 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Admin from './pages/Admin';
-import LaboratoryConsumables from './pages/LaboratoryConsumables';
+import React from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Admin from './pages/Admin'
+import LaboratoryConsumables from './pages/LaboratoryConsumables'
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
         <Route path="/" element={<LaboratoryConsumables />} />
       </Routes>
     </Router>
-  );
+  )
 }
 
-export default App;
+export default App
