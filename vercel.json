@@ -1,47 +1,38 @@
 {
   "version": 2,
+  "buildCommand": "npm run build",
+  "outputDirectory": "public",
+  "public": true,
   "builds": [
     {
-      "src": "*.html",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "*.css",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "*.js",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "images/*",
+      "src": "public/**/*",
       "use": "@vercel/static"
     }
   ],
   "routes": [
     {
       "src": "/",
-      "dest": "/index.html"
+      "dest": "/public/index.html"
     },
     {
       "src": "/lab-consumables",
-      "dest": "/lab-consumables.html"
+      "dest": "/public/lab-consumables.html"
     },
     {
       "src": "/geological-consumables",
-      "dest": "/geological-consumables.html"
+      "dest": "/public/geological-consumables.html"
     },
     {
       "src": "/safety-consumables",
-      "dest": "/safety-consumables.html"
+      "dest": "/public/safety-consumables.html"
     },
     {
       "src": "/technical-services",
-      "dest": "/technical-services.html"
+      "dest": "/public/technical-services.html"
     },
     {
       "src": "/(.*)",
-      "dest": "/$1"
+      "dest": "/public/$1"
     }
   ]
-} 
+}
