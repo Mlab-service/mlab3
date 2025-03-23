@@ -12,27 +12,28 @@
   "routes": [
     {
       "src": "/",
-      "dest": "/public/index.html"
+      "dest": "/index.html"
     },
     {
       "src": "/lab-consumables",
-      "dest": "/public/lab-consumables.html"
+      "dest": "/lab-consumables.html"
     },
     {
       "src": "/geological-consumables",
-      "dest": "/public/geological-consumables.html"
+      "dest": "/geological-consumables.html"
     },
     {
       "src": "/safety-consumables",
-      "dest": "/public/safety-consumables.html"
+      "dest": "/safety-consumables.html"
     },
     {
       "src": "/technical-services",
-      "dest": "/public/technical-services.html"
+      "dest": "/technical-services.html"
     },
     {
       "src": "/(.*)",
-      "dest": "/public/$1"
+      "dest": "/$1"
     }
+  ]
   ]
 }
