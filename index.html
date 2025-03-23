@@ -140,7 +140,7 @@
 
     <footer>
         <p>&copy; 2024 Mlab Technical Service. All rights reserved.</p>
-        <a href="#admin" style="display: block; text-align: center; margin-top: 10px;">Admin Access</a>
+        <a href="#admin" style="display: none; text-align: center; margin-top: 10px;"></a>
     </footer>
 
     <!-- EmailJS SDK -->
@@ -184,10 +184,10 @@
       .catch(console.error);
     </script>
 
-    <button id="add-product-button" class="btn">Add New Product</button>
+    <button id="add-product-button" style="display: none;" class="btn">Add New Product</button>
     <div id="add-product-form-container"></div>
 
-    <input type="file" id="image-upload" accept="image/*">
+    <input type="file" id="image-upload" style="display: none;" accept="image/*">
     <button id="upload-button" style="display: none;">Upload Image</button>
 
     <script>
@@ -225,4 +225,4 @@
         });
     </script>
 </body>
-</html> 
+</html>
