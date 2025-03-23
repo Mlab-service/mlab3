@@ -1,7 +1,4 @@
 import React, { useState } from 'react'
-import simpleGit from 'simple-git'
-import fs from 'fs'
-import path from 'path'
 
 const AdminPanel = () => {
   const [product, setProduct] = useState({
@@ -13,24 +10,38 @@ const AdminPanel = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     
-    // 保存到本地文件
-    const productsPath = path.join(process.cwd(), 'src', 'data', 'products.json')
-    const products = JSON.parse(fs.readFileSync(productsPath, 'utf8'))
+    // 获取当前产品列表
+    const response = await fetch('https://api.github.com/repos/Mlab-service/mlab4/contents/src/data/products.json')
+    const data = await response.json()
+    const products = JSON.parse(atob(data.content))
+    
+    // 添加新产品
     products.push(product)
-    fs.writeFileSync(productsPath, JSON.stringify(products, null, 2))
-
-    // 自动Git操作
-    const git = simpleGit()
-    await git.add('.')
-    await git.commit(`Add product: ${product.name}`)
-    await git.push()
-
-    alert('Product added and changes pushed successfully!')
-    setProduct({
-      name: '',
-      image: '',
-      description: ''
+    
+    // 更新文件
+    const updateResponse = await fetch(data.url, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${process.env.REACT_APP_GITHUB_TOKEN}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        message: `Add product: ${product.name}`,
+        content: btoa(JSON.stringify(products, null, 2)),
+        sha: data.sha
+      })
     })
+
+    if (updateResponse.ok) {
+      alert('Product added successfully!')
+      setProduct({
+        name: '',
+        image: '',
+        description: ''
+      })
+    } else {
+      alert('Error adding product')
+    }
   }
 
   return (
