@@ -1,10 +1,16 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Admin from './pages/Admin';
+import LaboratoryConsumables from './pages/LaboratoryConsumables';
 
 function App() {
   return (
-    <div>
-      <h1>Welcome to MLab Technical</h1>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/" element={<LaboratoryConsumables />} />
+      </Routes>
+    </Router>
   );
 }
 
