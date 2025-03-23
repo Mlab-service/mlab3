@@ -7,7 +7,7 @@ const Admin = () => {
 
   const handleLogin = (e) => {
     e.preventDefault()
-    if (password === 'YOUR_ADMIN_PASSWORD') {
+    if (password === '0030') {
       setAuthenticated(true)
     } else {
       alert('Incorrect password')
