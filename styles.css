@@ -468,7 +468,7 @@ footer {
 }
 
 #home {
-    background-image: url('images/home.jpg');
+    background-image: url('images/home.svg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
