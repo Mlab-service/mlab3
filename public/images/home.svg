@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1920" height="1080" fill="#F5F5F5"/>
+    <path d="M0 0h1920v1080H0z" fill="#FFE5D9"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M960 540c0-165.685-134.315-300-300-300S360 374.315 360 540s134.315 300 300 300 300-134.315 300-300zm-50 0c0-137.71-111.29-249-249-249S412 402.29 412 540s111.29 249 249 249 249-111.29 249-249z" fill="#FF7F50" fill-opacity=".2"/>
+    <circle cx="960" cy="540" r="200" fill="#FF7F50" fill-opacity=".1"/>
+    <path d="M880 460h160v160H880z" fill="#FF7F50" fill-opacity=".05"/>
+</svg>
