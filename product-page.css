@@ -195,7 +195,7 @@
     }
 }
 
-/* 管理员控制按钮 */
+/* Admin Control Buttons */
 .admin-controls {
     margin-bottom: 2rem;
     text-align: right;
@@ -495,7 +495,7 @@
     font-size: 1.2rem;
 }
 
-/* 服务列表样式 */
+/* Service List Styles */
 .services-list {
     display: flex;
     flex-direction: column;
@@ -537,4 +537,4 @@
     color: var(--primary-color);
     position: absolute;
     left: -1.5rem;
-} 
+}
