@@ -30,19 +30,19 @@
     },
     {
       "src": "/lab-consumables",
-      "dest": "/lab-consumables.html"
+      "dest": "/pages/lab-consumables.html"
     },
     {
       "src": "/geological-consumables",
-      "dest": "/geological-consumables.html"
+      "dest": "/pages/geological-consumables.html"
     },
     {
       "src": "/safety-consumables",
-      "dest": "/safety-consumables.html"
+      "dest": "/pages/safety-consumables.html"
     },
     {
       "src": "/technical-services",
-      "dest": "/technical-services.html"
+      "dest": "/pages/technical-services.html"
     },
     {
       "src": "/(.*)",
