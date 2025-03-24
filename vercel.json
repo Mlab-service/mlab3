@@ -3,7 +3,7 @@
   "public": true,
   "builds": [
     {
-      "src": "build/**/*",
+      "src": "public/**/*",
       "use": "@vercel/static"
     }
   ],
